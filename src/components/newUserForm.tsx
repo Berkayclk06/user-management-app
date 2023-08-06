@@ -73,7 +73,6 @@ export const NewUserForm: React.FC<Types.NewUserFormProps> = ({ selectedUser, se
           dateOfBirth: dateStringToTimestamp(data.dob), 
           country: data.country, 
           city: data.city,
-          userId: auth?.currentUser?.uid
         });
         setSelectedUser(null);
       } else {
@@ -81,9 +80,8 @@ export const NewUserForm: React.FC<Types.NewUserFormProps> = ({ selectedUser, se
         await addDoc(userCollectionRef, {
           name: data.username, 
           dateOfBirth: Timestamp.fromDate(date),
-          country: data.country, 
+          country: data.country,
           city: data.city,
-          userId: auth?.currentUser?.uid,
           createdAt: Timestamp.fromDate(new Date())
         });
       }
