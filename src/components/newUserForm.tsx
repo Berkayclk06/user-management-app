@@ -64,8 +64,7 @@ export const NewUserForm: React.FC<Types.NewUserFormProps> = ({ selectedUser, se
   
   const onSubmit = async (data: Types.FormInputs) => {
     try{
-      console.log("Submitted");
-      
+    
       if (selectedUser) {
         const userDoc = doc(db, "Users", selectedUser.id)
         await updateDoc(userDoc, { 
