@@ -1,46 +1,54 @@
-# Getting Started with Create React App
+# User Management App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a simple user management application built with React and Firebase. The application allows you to add, update, and delete users, and displays a list of all users.
 
-## Available Scripts
+<img src="./image-5.png" alt="Your image description" width="700"/>
 
-In the project directory, you can run:
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- Add new users with fields for name, date of birth, country, and city
+- Update existing users
+- Delete users
+- View a list of all users
+- Data is stored in Firebase Firestore, and updates in real time
+- Uses Firebase Authentication for user sign-in
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Technologies Used
 
-### `npm test`
+- React
+- Firebase Firestore for the backend
+- Firebase Authentication
+- CoreUI for the frontend UI components
+- React Hook Form for form handling
+- TypeScript
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## How to Run Locally
 
-### `npm run build`
+1. Clone the repository to your local machine.
+2. Install the dependencies with `npm install`.
+3. Create a `.env` file in the root directory of the project, and add your Firebase configuration variables:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+        REACT_APP_FIREBASE_API_KEY=your-api-key
+        REACT_APP_FIREBASE_AUTH_DOMAIN=your-auth-domain
+        REACT_APP_FIREBASE_PROJECT_ID=your-project-id
+        REACT_APP_FIRESTORE_STORAGE_BUDGET=your-storage-bucket
+        REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your-messaging-sender-id
+        REACT_APP_FIREBASE_APP_ID=your-app-id
+        REACT_APP_FIREBASE_MEASUREMENT_ID=your-measurement-id
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+4. Run the app with `npm start`. The app will be available at `localhost:3000`.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Please note that you need to have `node` and `npm` installed on your local machine.
 
-### `npm run eject`
+## Project Structure
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+The main components of the project are:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- `NewUserForm`: This component is responsible for both adding new users and updating existing users.
+- `UserList`: This component fetches the user data from Firestore and displays it in a table.
+- `firebase.tsx`: This file contains the configuration and initialization of Firebase.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Contributing
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
