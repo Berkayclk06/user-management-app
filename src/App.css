@@ -1,0 +1,179 @@
+body {
+  background-color: #f5f5f5;
+}
+
+.App {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-around;
+  gap: 2rem;
+  padding: 2rem;
+  background-color: #f5f5f5;
+}
+
+.form-container {
+  flex: 0.2;
+}
+
+.table-container {
+  flex: 1; 
+  margin-left: 30px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+table thead tr {
+  background-color: #009879;
+  color: #ffffff;
+  text-align: left;
+}
+
+table th,
+table td {
+  padding: 12px 15px;
+  text-align: center;
+}
+
+table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+table tbody tr:last-of-type {
+  border-bottom: 2px solid #009879;
+}
+
+table tbody tr.active-row {
+  font-weight: bold;
+  color: #009879;
+}
+
+.CForm {
+  width: 100%;
+  max-width: 400px;
+  padding: 15px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.CFormLabel {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.CFormInput,
+.Select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+.CButton {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  background-color: #009879;
+}
+
+.CButton:hover {
+  background-color: #007b5e;
+}
+
+.delete-button {
+  padding: 10px 20px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background-color: #da190b;
+}
+
+.form-button {
+  margin-top: 10px;
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  background-color: #009879;
+}
+
+.form-button:hover {
+  background-color: #007b5e;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+
+.NewUserForm > *, .UserList > * {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.no-data {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #009879;
+  color: white;
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+  font-weight: bold;
+}
+
+.footer-button {
+  border-radius: 50%; /* makes the button round */
+  border: none; /* removes the default button border */
+  width: 50px; /* set the width and height to create a square button, adjust as needed */
+  height: 50px;
+  background-color: #009879; /* change this to the desired background color */
+  display: flex; /* these three lines center the svg image in the button */
+  justify-content: center;
+  align-items: center;
+  margin: 0 10px; /* add some space between the buttons */
+}
+
+.footer-button img {
+  width: 70%; /* adjust this as needed */
+  height: 70%;
+}
+
+.CTableFoot {
+  display: flex;
+  justify-content: center;
+  background-color: #009879; /* change this to the desired background color */
+  padding: 10px 0; /* add some vertical padding */
+}
+
