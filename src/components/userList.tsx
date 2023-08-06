@@ -1,70 +1,33 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { CTable, CTableBody, CTableHead, CTableHeaderCell, CTableRow, CTableDataCell, CTableFoot } from '@coreui/react';
-import { collection, query, getDocs, orderBy, limit, startAfter, startAt, doc, deleteDoc } from 'firebase/firestore';
+import { CTable, CTableBody, CTableHead, CTableHeaderCell, CTableRow, CTableDataCell } from '@coreui/react';
+import { collection, query, getDocs, orderBy, doc, deleteDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import UserContext from '../context/UserContext';
 import '../App.css';
+import * as Types from './types';
 
 
-interface UserListProps {
-  selectedUser: any;
-  setSelectedUser: (user: any) => void;
-}
 
-export const UserList: React.FC<UserListProps> = ({ selectedUser, setSelectedUser }) => {
+
+export const UserList: React.FC<Types.UserListProps> = ({ selectedUser, setSelectedUser }) => {
     const [userList, setUserList] = useState<any>([]);
     const userCollectionRef = collection(db, "Users");
-    const { userUpdated, setUserUpdated } = useContext<any>(UserContext);
-    const [lastDoc, setLastDoc] = useState<any>(null);
-    const [firstDoc, setFirstDoc] = useState<any>(null);
-    const [page, setPage] = useState<any>(0);
+    const { userUpdated } = useContext<any>(UserContext);
       
-    const getUserList = async (direction = 'next', doc = null) => {
+    const getUserList = async () => {
       try {
-        let data;
-
-        switch (direction) {
-          case 'next':
-            if (doc) {
-              data = await getDocs(query(collection(db, 'Users'), orderBy('name'), startAfter(doc), limit(10)));
-            } else {
-              data = await getDocs(query(collection(db, 'Users'), orderBy('name'), limit(10)));
-            }
-            break;
-          case 'previous':
-            if (doc) {
-              data = await getDocs(query(collection(db, 'Users'), orderBy('name'), startAt(doc), limit(10)));
-            }
-            break;
-          default:
-            console.log(`Unknown direction: ${direction}`);
-            return;
-        }
-
-        const users = data?.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-
-        setUserList(users);
-        setFirstDoc(data?.docs[0] || null);
-        setLastDoc(data?.docs[data.docs.length - 1] || null);
+        const data = await getDocs(query(userCollectionRef, orderBy("createdAt")));
+        const filteredData: any = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+        setUserList(filteredData);
       } catch (err) {
         console.error(err);
       }
     };
-
   
     useEffect(() => {
       getUserList();
-    }, []);
-    
-    const handleNext = () => {
-      getUserList('next', lastDoc);
-      setPage(page + 1);
-    };
-    
-    const handlePrevious = () => {
-      getUserList('previous', firstDoc);
-      setPage(page - 1);
-    };
+    }, [userUpdated]);
+  
 
     const deleteUser = async (id: any) => {
       try {
@@ -101,7 +64,6 @@ export const UserList: React.FC<UserListProps> = ({ selectedUser, setSelectedUse
                 <CTableDataCell>{user.name}</CTableDataCell>
                 <CTableDataCell>{user.country.label}</CTableDataCell>
                 <CTableDataCell>{user.city.label}</CTableDataCell>
-                {/* Display the date string */}
                 <CTableDataCell>{new Date(user.dateOfBirth.seconds * 1000).toISOString().split('T')[0]}</CTableDataCell>
                 <CTableDataCell><button className="delete-button" onClick={() => deleteUser(user.id)}> Delete User</button></CTableDataCell>
                 <CTableDataCell>

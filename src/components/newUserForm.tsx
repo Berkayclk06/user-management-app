@@ -6,31 +6,15 @@ import Select from 'react-select';
 import { CForm, CFormLabel, CFormInput, CButton, CRow, CCol } from '@coreui/react';
 import UserContext from '../context/UserContext';
 import '../App.css';
+import * as Types from './types';
 
 
-interface SelectOption {
-  value: string;
-  label: string;
-}
-
-interface FormInputs {
-  username: string;
-  dob: string;
-  country?: SelectOption;
-  city?: SelectOption;
-}
-
-interface NewUserFormProps {
-    selectedUser: any;
-    setSelectedUser: (user: any) => void;
-}
-
-const countryOptions: SelectOption[] = [
+const countryOptions: Types.SelectOption[] = [
   { value: 'Canada', label: 'Canada' },
   { value: 'USA', label: 'USA' },
 ];
 
-const cityOptionsMap: Record<string, SelectOption[]> = {
+const cityOptionsMap: Record<string, Types.SelectOption[]> = {
   Canada: [
     { value: 'Ottawa', label: 'Ottawa' },
     { value: 'Toronto', label: 'Toronto' },
@@ -42,28 +26,23 @@ const cityOptionsMap: Record<string, SelectOption[]> = {
 };
 
 function dateStringToTimestamp(dateString: string) {
-    // Parse the date as UTC
+
     const date = new Date(dateString + 'T00:00:00Z');
     const seconds = Math.floor(date.getTime() / 1000);
     return new Timestamp(seconds, 0);
 }
 
 function localDateStringToAdjustedDate(localDateString:any) {
-  // Parse the date string
-  const [year, month, day] = localDateString.split('-').map(Number);
 
-  // Create a Date object with the local date adjusted to UTC
+  const [year, month, day] = localDateString.split('-').map(Number);
   const date = new Date(Date.UTC(year, month - 1, day));
 
   return date;
 }
-  
 
-  
-
-export const NewUserForm: React.FC<NewUserFormProps> = ({ selectedUser, setSelectedUser }) => {
-  const { handleSubmit, control, setValue, reset } = useForm<FormInputs>();
-  const [selectedCountry, setSelectedCountry] = useState<SelectOption | null>(null);
+export const NewUserForm: React.FC<Types.NewUserFormProps> = ({ selectedUser, setSelectedUser }) => {
+  const { handleSubmit, control, setValue, reset } = useForm<Types.FormInputs>();
+  const [selectedCountry, setSelectedCountry] = useState<Types.SelectOption | null>(null);
   const userCollectionRef = collection(db, "Users");
   const { userUpdated, setUserUpdated } = useContext(UserContext);
   const [selectKey, setSelectKey] = useState(0);
@@ -83,7 +62,7 @@ export const NewUserForm: React.FC<NewUserFormProps> = ({ selectedUser, setSelec
   }, [selectedUser, setValue, reset]);
   
   
-  const onSubmit = async (data: FormInputs) => {
+  const onSubmit = async (data: Types.FormInputs) => {
     try{
       console.log("Submitted");
       
@@ -101,17 +80,18 @@ export const NewUserForm: React.FC<NewUserFormProps> = ({ selectedUser, setSelec
         const date = localDateStringToAdjustedDate(data.dob);
         await addDoc(userCollectionRef, {
           name: data.username, 
-          dateOfBirth: Timestamp.fromDate(date), // Convert the adjusted date to a Timestamp
+          dateOfBirth: Timestamp.fromDate(date),
           country: data.country, 
           city: data.city,
-          userId: auth?.currentUser?.uid
+          userId: auth?.currentUser?.uid,
+          createdAt: Timestamp.fromDate(new Date())
         });
       }
   
       setUserUpdated((currentState: boolean) => !currentState);
       reset();
       setSelectedCountry(null);
-      setSelectKey(prevKey => prevKey + 1); // increment the key
+      setSelectKey(prevKey => prevKey + 1);
   
     } catch (err) {
       console.error(err);
@@ -121,7 +101,7 @@ export const NewUserForm: React.FC<NewUserFormProps> = ({ selectedUser, setSelec
   
   
 
-  const handleCountryChange = (selectedOption: SelectOption | null) => {
+  const handleCountryChange = (selectedOption: Types.SelectOption | null) => {
     setSelectedCountry(selectedOption);
   };
 
